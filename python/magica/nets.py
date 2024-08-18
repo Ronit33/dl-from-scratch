@@ -16,7 +16,8 @@ class Linear:
     
 # ******************LOSSES***********************
 def cross_entropy_loss(true, preds):
-    log_preds = np.log(preds + 1e-7)  # To handle zeros and prevent log(0)
+    clipped_preds = np.clip(preds, 1e-7, 1-1e-7)
+    log_preds = np.log(clipped_preds)  # To handle zeros and prevent log(0)
     
     if len(true.shape) == 1:
         # Integer labels case
