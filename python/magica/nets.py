@@ -13,3 +13,14 @@ class Linear:
         out = np.dot(inputs, self.weights.T) + self.bias
         
         return out
+    
+# ******************LOSSES***********************
+def cross_entropy_loss(true, preds):
+    log_preds = np.log(preds + 1e-7)  # To handle zeros and prevent log(0)
+    
+    if len(true.shape) == 1:
+        # Integer labels case
+        return -np.mean(log_preds[np.arange(len(preds)), true])
+    
+    # One-hot encoded labels case
+    return -np.mean(np.sum(true * log_preds, axis=1))
